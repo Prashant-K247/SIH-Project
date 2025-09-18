@@ -7,7 +7,8 @@ import Blogs from './Pages/Blogs'
 import Home from './Pages/Home'
 import Mindgym from './mindgym/mindgym' 
 import Community from './Pages/Community'
-import Upgrade from './Pages/Upgrade'
+
+import Meditation from './mindgym/Meditation'
 
 
 function App() {
@@ -30,7 +31,11 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/mindgym" element={<Mindgym />} />
           <Route path="/community" element={<Community />} />
-          <Route path="/upgrade" element={<Upgrade />} />
+
+          <Route path="/meditation" element={<Meditation />} />
+
+        
+       
         </Route>
       </Routes>
       
