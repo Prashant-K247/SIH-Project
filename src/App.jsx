@@ -8,6 +8,7 @@ import Home from './Pages/Home'
 import Mindgym from './mindgym/mindgym' 
 import Community from './Pages/Community'
 import Upgrade from './Pages/Upgrade'
+import Nature from './mindgym/Nature'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/mindgym" element={<Mindgym />} />
           <Route path="/community" element={<Community />} />
           <Route path="/upgrade" element={<Upgrade />} />
+          <Route path="/nature" element={<Nature />} />
         </Route>
       </Routes>
       
