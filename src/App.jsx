@@ -9,6 +9,7 @@ import Mindgym from './mindgym/mindgym'
 import Community from './Pages/Community'
 
 import Meditation from './mindgym/Meditation'
+import Breathing from './mindgym/Breathing'
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/mindgym" element={<Mindgym />} />
           <Route path="/community" element={<Community />} />
 
+          <Route path="/breathing" element={<Breathing />} />
           <Route path="/meditation" element={<Meditation />} />
 
         
