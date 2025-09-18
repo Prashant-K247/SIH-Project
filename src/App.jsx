@@ -7,7 +7,7 @@ import Blogs from './Pages/Blogs'
 import Home from './Pages/Home'
 import Mindgym from './mindgym/mindgym' 
 import Community from './Pages/Community'
-
+import Meditation from './mindgym/Meditation'
 
 function App() {
   return (
@@ -24,6 +24,9 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/mindgym" element={<Mindgym />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/meditation" element={<Meditation />} />
+
+        
         </Route>
       </Routes>
       
