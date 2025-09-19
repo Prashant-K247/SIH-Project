@@ -1,63 +1,64 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 /**
- * Meditation.jsx
+ * Final Clean Meditation.jsx
  * ------------------------------------------------------------
- * A full meditation page with:
+ * Features:
  *  - Timer (5/10/15/30 mins)
- *  - Auto-start looping sounds (Ocean, Rain, Forest, Flute)
+ *  - Background YouTube videos (Ocean, Rain, Forest, Flute)
  *  - Rotating quotes/mantras
  *  - Progress circle visualization
- *  - Dark/Light mode toggle
- *  - Session summary at end
+ *  - Dark/Light mode toggle (default: Light)
+ *  - Fullscreen toggle
+ *  - Stop confirmation + Session summary
  *  - Keyboard shortcuts: Space = Pause/Resume, Esc = Stop
  * ------------------------------------------------------------
  */
 
 export default function Meditation() {
-  // ---------------------- STATES ----------------------
-  const [isDark, setIsDark] = useState(true); // Dark/Light theme
-  const [duration, setDuration] = useState(0); // Total minutes chosen
-  const [timeLeft, setTimeLeft] = useState(0); // Seconds left
-  const [isActive, setIsActive] = useState(false); // Session running
-  const [isPaused, setIsPaused] = useState(false); // Pause state
-  const [sound, setSound] = useState("ocean"); // Selected sound
-  const [completed, setCompleted] = useState(false); // Session done
-  const [currentQuote, setCurrentQuote] = useState(""); // Rotating quote
+  const [isDark, setIsDark] = useState(false); // Default light mode
+  const [duration, setDuration] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [video, setVideo] = useState("ocean");
+  const [completed, setCompleted] = useState(false);
+  const [currentQuote, setCurrentQuote] = useState("");
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showStopConfirm, setShowStopConfirm] = useState(false);
+  const [sessionDetails, setSessionDetails] = useState(null);
 
-  // Ref to audio element
-  const audioRef = useRef(null);
+  // ---------------------- YOUTUBE LINKS ----------------------
+  const videos = {
+    ocean: "https://youtu.be/o8GrqUSdzi0?si=jz2un8_FFgS96kpd",
+    rain: "https://youtu.be/o8GrqUSdzi0?si=b3mhh8eg3DzxDrpt",
+    forest: "https://youtu.be/Nd7e4SNjGBM?si=aXd_rgAgFBroDjnu",
+    flute: "https://youtu.be/GN5q747x1zI?si=-clH3L3H2N_kfZXc",
+  };
 
-  // ---------------------- SOUND LIBRARY ----------------------
-  const sounds = {
-    ocean:
-      "https://cdn.pixabay.com/download/audio/2022/03/15/audio_6a8e7e7a5b.mp3?filename=relaxing-sea-waves-ambient-110624.mp3",
-    rain:
-      "https://cdn.pixabay.com/download/audio/2022/03/15/audio_d6b27b6082.mp3?filename=gentle-rain-ambient-110624.mp3",
-    forest:
-      "https://cdn.pixabay.com/download/audio/2022/03/15/audio_799f88a7cb.mp3?filename=forest-nature-ambience-110623.mp3",
-    flute:
-      "https://cdn.pixabay.com/download/audio/2021/11/09/audio_91a63e2499.mp3?filename=indian-flute-ambient-110625.mp3",
+  const getYouTubeID = (url) => {
+    const regExp =
+      /^.*((youtu.be\/)|(v\/)|(u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[7].length === 11 ? match[7] : null;
   };
 
   // ---------------------- QUOTES ----------------------
   const quotes = [
-    "“Quiet the mind, and the soul will speak.” – Ma Jaya Sati Bhagavati",
+    "“Quiet the mind, and the soul will speak.”",
     "“Inhale the future, exhale the past.”",
-    "“Meditation is the discovery that the point of life is always arrived at in the immediate moment.” – Alan Watts",
+    "“Meditation is the discovery that the point of life is always in the moment.” – Alan Watts",
     "“Your calm mind is the ultimate weapon against your challenges.”",
-    "“The soul always knows what to do to heal itself. The challenge is to silence the mind.”",
-    "“Meditation is a vital way to purify and quiet the mind, thus rejuvenating the body.” – Deepak Chopra",
+    "“The soul always knows what to do to heal itself.”",
+    "“Meditation is a way to purify and rejuvenate the body.” – Deepak Chopra",
   ];
 
-  // ---------------------- TIMER EFFECT ----------------------
+  // ---------------------- TIMER ----------------------
   useEffect(() => {
     if (!isActive || isPaused) return;
 
     if (timeLeft <= 0 && duration > 0) {
-      setIsActive(false);
-      setCompleted(true);
-      stopAudio();
+      finishSession();
       return;
     }
 
@@ -74,103 +75,119 @@ export default function Meditation() {
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * quotes.length);
       setCurrentQuote(quotes[randomIndex]);
-    }, 15000); // new quote every 15 sec
+    }, 15000);
     return () => clearInterval(interval);
   }, [isActive]);
-
-  // ---------------------- AUDIO HANDLING ----------------------
-  useEffect(() => {
-    if (isActive && !isPaused && sound) {
-      playAudio(sounds[sound]);
-    }
-  }, [sound, isActive, isPaused]);
-
-  const playAudio = (url) => {
-    if (!audioRef.current) return;
-    audioRef.current.src = url;
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.4;
-    audioRef.current
-      .play()
-      .catch((err) => console.log("Audio play error:", err));
-  };
-
-  const stopAudio = () => {
-    if (!audioRef.current) return;
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
-  };
 
   // ---------------------- KEYBOARD SHORTCUTS ----------------------
   useEffect(() => {
     const handleKey = (e) => {
       if (e.code === "Space") {
         e.preventDefault();
-        if (isActive) {
-          setIsPaused((p) => !p);
-          if (!isPaused) {
-            stopAudio();
-          } else {
-            playAudio(sounds[sound]);
-          }
-        }
+        if (isActive) setIsPaused((p) => !p);
       } else if (e.code === "Escape") {
         e.preventDefault();
-        stopSession();
+        setShowStopConfirm(true);
       }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   });
 
-  // ---------------------- SESSION HANDLERS ----------------------
+  // ---------------------- FULLSCREEN ----------------------
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  // ---------------------- SESSION ----------------------
   const startSession = (mins) => {
     setDuration(mins);
     setTimeLeft(mins * 60);
     setIsActive(true);
     setIsPaused(false);
     setCompleted(false);
+    setSessionDetails(null);
     const randomIndex = Math.floor(Math.random() * quotes.length);
     setCurrentQuote(quotes[randomIndex]);
-    playAudio(sounds[sound]);
   };
 
   const stopSession = () => {
     setIsActive(false);
     setIsPaused(false);
+    setShowStopConfirm(false);
+    setSessionDetails({
+      planned: duration,
+      completed: ((duration * 60 - timeLeft) / 60).toFixed(1),
+    });
+    setCompleted(true);
     setDuration(0);
     setTimeLeft(0);
-    stopAudio();
   };
 
-  // Format mm:ss
+  const finishSession = () => {
+    setIsActive(false);
+    setCompleted(true);
+    setSessionDetails({ planned: duration, completed: duration });
+  };
+
   const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0");
+    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
 
-  // Progress circle %
-  const progress = duration ? ((duration * 60 - timeLeft) / (duration * 60)) * 100 : 0;
+  const progress = duration
+    ? ((duration * 60 - timeLeft) / (duration * 60)) * 100
+    : 0;
 
   // ---------------------- RENDER ----------------------
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center transition-colors duration-500 ${
+      className={`min-h-screen flex flex-col items-center justify-start p-6 transition-colors duration-500 ${
         isDark
           ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-gray-100"
-          : "bg-gradient-to-br from-blue-100 via-green-100 to-yellow-100 text-gray-800"
+          : "bg-gradient-to-br from-blue-50 via-green-50 to-yellow-50 text-gray-900"
       }`}
     >
-      {/* Hidden audio element */}
-      <audio ref={audioRef} />
+      {/* Heading */}
+      <h1 className="text-3xl md:text-4xl font-bold mb-4">🧘 Meditation Space</h1>
 
-      {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-bold mb-8 drop-shadow-lg">
-        🧘 Meditation Space
-      </h1>
+      {/* Dark/Light and Fullscreen buttons */}
+      <div className="flex space-x-2 mb-4">
+        <button
+          onClick={() => setIsDark((d) => !d)}
+          className="px-2 py-1 text-sm rounded-lg bg-gray-700 text-white hover:bg-gray-600"
+        >
+          {isDark ? "Light Mode" : "Dark Mode"}
+        </button>
+        <button
+          onClick={toggleFullscreen}
+          className="px-2 py-1 text-sm rounded-lg bg-gray-700 text-white hover:bg-gray-600"
+        >
+          {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+        </button>
+      </div>
+
+      {/* YouTube Video */}
+      <div className="w-full max-w-2xl aspect-video rounded-lg shadow-lg overflow-hidden mb-6">
+        <iframe
+          className="w-full h-full"
+          src={`https://www.youtube.com/embed/${getYouTubeID(
+            videos[video]
+          )}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeID(
+            videos[video]
+          )}&controls=1&modestbranding=1&rel=0`}
+          title="Meditation Video"
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+        ></iframe>
+      </div>
 
       {/* Controls if not active */}
       {!isActive && !completed && (
@@ -181,22 +198,21 @@ export default function Meditation() {
               <button
                 key={m}
                 onClick={() => startSession(m)}
-                className="px-4 py-2 rounded-xl font-semibold shadow-md
-                bg-indigo-600 text-white hover:bg-indigo-700 transition"
+                className="px-4 py-2 rounded-xl font-semibold shadow-md bg-indigo-600 text-white hover:bg-indigo-700"
               >
                 {m} min
               </button>
             ))}
           </div>
 
-          {/* Sound Selector */}
+          {/* Video Selector */}
           <div className="flex space-x-4">
-            {Object.keys(sounds).map((key) => (
+            {Object.keys(videos).map((key) => (
               <button
                 key={key}
-                onClick={() => setSound(key)}
+                onClick={() => setVideo(key)}
                 className={`px-3 py-2 rounded-lg font-medium transition ${
-                  sound === key
+                  video === key
                     ? "bg-green-600 text-white"
                     : "bg-gray-300 text-gray-800 hover:bg-gray-400"
                 }`}
@@ -205,58 +221,47 @@ export default function Meditation() {
               </button>
             ))}
           </div>
-
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setIsDark((d) => !d)}
-            className="mt-4 px-3 py-1 rounded-lg bg-gray-600 text-white hover:bg-gray-700"
-          >
-            {isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          </button>
         </div>
       )}
 
       {/* Active Session */}
       {isActive && (
-        <div className="flex flex-col items-center space-y-8">
-          {/* Progress Circle */}
-          <div className="relative w-56 h-56">
+        <div className="flex flex-col items-center space-y-6">
+          <div className="relative w-48 h-48">
             <svg className="w-full h-full">
               <circle
                 className="text-gray-400"
                 strokeWidth="8"
                 stroke="currentColor"
                 fill="transparent"
-                r="100"
-                cx="112"
-                cy="112"
+                r="90"
+                cx="96"
+                cy="96"
               />
               <circle
                 className="text-green-500 transition-all duration-1000"
                 strokeWidth="8"
-                strokeDasharray={2 * Math.PI * 100}
+                strokeDasharray={2 * Math.PI * 90}
                 strokeDashoffset={
-                  2 * Math.PI * 100 - (progress / 100) * (2 * Math.PI * 100)
+                  2 * Math.PI * 90 - (progress / 100) * (2 * Math.PI * 90)
                 }
                 strokeLinecap="round"
                 stroke="currentColor"
                 fill="transparent"
-                r="100"
-                cx="112"
-                cy="112"
+                r="90"
+                cx="96"
+                cy="96"
               />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center text-4xl font-bold">
+            <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold">
               {formatTime(timeLeft)}
             </div>
           </div>
 
-          {/* Quote */}
-          <p className="text-lg italic text-center max-w-md leading-relaxed">
+          <p className="text-center italic max-w-md leading-relaxed">
             {currentQuote}
           </p>
 
-          {/* Controls */}
           <div className="flex space-x-4">
             <button
               onClick={() => setIsPaused((p) => !p)}
@@ -265,7 +270,7 @@ export default function Meditation() {
               {isPaused ? "Resume" : "Pause"}
             </button>
             <button
-              onClick={stopSession}
+              onClick={() => setShowStopConfirm(true)}
               className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
             >
               Stop
@@ -274,14 +279,38 @@ export default function Meditation() {
         </div>
       )}
 
+      {/* Stop Confirmation */}
+      {showStopConfirm && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col items-center space-y-4">
+            <p className="text-lg font-semibold text-center text-gray-900 dark:text-gray-100">
+              Are you sure you want to stop the session?
+            </p>
+            <div className="flex space-x-4">
+              <button
+                onClick={stopSession}
+                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
+              >
+                Yes, Stop
+              </button>
+              <button
+                onClick={() => setShowStopConfirm(false)}
+                className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Session Summary */}
-      {completed && (
-        <div className="flex flex-col items-center space-y-6">
-          <h2 className="text-2xl font-bold text-green-500">
-            🎉 Well done!
-          </h2>
+      {completed && sessionDetails && (
+        <div className="flex flex-col items-center space-y-4 mt-6">
+          <h2 className="text-2xl font-bold text-green-500">🎉 Session Complete</h2>
           <p className="text-center">
-            You completed a {duration}-minute meditation session.
+            Planned: {sessionDetails.planned} min <br />
+            Completed: {sessionDetails.completed} min
           </p>
           <button
             onClick={() => setCompleted(false)}
@@ -292,11 +321,10 @@ export default function Meditation() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="absolute bottom-4 text-sm opacity-70">
-        Made with ❤️ for your calmness
-      </footer>
+    <footer className="w-full text-center py-4 text-sm opacity-70">
+  Made with ❤️ for your calmness
+</footer>
+
     </div>
   );
 }
-
