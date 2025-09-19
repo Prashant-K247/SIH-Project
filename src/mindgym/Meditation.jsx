@@ -30,7 +30,7 @@ export default function Meditation() {
 
   // ---------------------- YOUTUBE LINKS ----------------------
   const videos = {
-    ocean: "https://youtu.be/o8GrqUSdzi0?si=jz2un8_FFgS96kpd",
+    ocean: "https://www.youtube.com/watch?v=LTmXmskEMas",
     rain: "https://youtu.be/o8GrqUSdzi0?si=b3mhh8eg3DzxDrpt",
     forest: "https://youtu.be/Nd7e4SNjGBM?si=aXd_rgAgFBroDjnu",
     flute: "https://youtu.be/GN5q747x1zI?si=-clH3L3H2N_kfZXc",

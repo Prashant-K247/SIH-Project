@@ -9,15 +9,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// Modern Meditation App with Enhanced Breathing Exercises
-// Features:
-// - Modern glassmorphism UI design
-// - Advanced breathing exercises with visual guides
-// - Multiple breathing patterns (4-7-8, Box, Triangle, etc.)
-// - Smooth animations and transitions
-// - Progress tracking and mood insights
-// - Ambient sounds and TTS support
-// - Responsive design with dark/light themes
 
 export default function MeditationApp() {
   // --- Enhanced default sessions with breathing exercises ---
@@ -671,7 +662,7 @@ export default function MeditationApp() {
           <select 
             value={type} 
             onChange={(e) => setType(e.target.value)} 
-            className="p-3 rounded-lg backdrop-blur-sm border focus:outline-none focus:ring-2 focus:ring-indigo-500 theme-transition"
+            className="p-3 rounded-lg  border focus:outline-none focus:ring-2 focus:ring-indigo-500 theme-transition"
             style={{ 
               background: 'var(--glass-bg)', 
               borderColor: 'var(--glass-border)', 
@@ -851,8 +842,8 @@ export default function MeditationApp() {
         transition={{ duration: 0.5 }}
       >
         <div>
-          <h1 className="text-4xl font-bold mb-2 theme-transition" style={{ color: 'var(--text-primary)' }}>🧘 MindGym</h1>
-          <p className="text-lg theme-transition" style={{ color: 'var(--text-secondary)' }}>Modern meditation & breathing exercises for mindfulness</p>
+          <h1 className="text-4xl font-bold mb-2 theme-transition text-black" >🧘 MindGym</h1>
+          <p className="text-lg theme-transition text-gray-800">Modern meditation & breathing exercises for mindfulness</p>
         </div>
 
         <div className="flex items-center gap-4">
@@ -967,7 +958,7 @@ export default function MeditationApp() {
                   onChange={(e) => setAmbient(e.target.value)} 
                   className="w-full p-3 rounded-lg backdrop-blur-sm border focus:outline-none focus:ring-2 focus:ring-indigo-500 theme-transition"
                   style={{ 
-                    background: 'var(--glass-bg)', 
+                    background: 'bg-gray-800', 
                     borderColor: 'var(--glass-border)', 
                     color: 'var(--text-primary)' 
                   }}
