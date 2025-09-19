@@ -37,8 +37,7 @@ function App() {
           <Route path="/meditation" element={<Meditation />} />
           <Route path="/nature" element={<Nature />} />
           <Route path="/upgrade" element={<Upgrade />} />
-          <Route path="/page" element={<Page />} />
-          
+          <Route path="/page" element={<Page />} />     
         </Route>
       </Routes>
       

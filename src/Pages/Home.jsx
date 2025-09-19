@@ -75,7 +75,7 @@ function Home() {
       {/* 4th */}
       <div className="bg-white border max-w-200 h-80 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-center">
         <div className="">
-          <Link to="/Blogs">
+          <Link to="/games">
             <img
               className="rounded-t-lg w-full h-50 object-cover mb-2"
               src=''
@@ -83,7 +83,7 @@ function Home() {
             />
           </Link>
           <div className='p-5'>
-            <Link to="/">
+            <Link to="/games">
             <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               Relax, Play some games
             </h3>
