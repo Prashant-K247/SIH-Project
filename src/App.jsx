@@ -17,7 +17,7 @@ function App() {
   return (
     <Router>
       <div>
-        <header className="w-full h-20 px-4 py-5 bg-gray-800 flex items-center">
+        <header className="w-full h-20 px-4 py-5 bg-[#462994] flex items-center">
           <Link to="/upgrade" className='ml-auto'>
           <button className="flex items-center text-white font-bold text-xl ml-4 ml-auto bg-gray-600 rounded-lg px-2 py-1 transition  hover:bg-gray-500">
           <h1 className='mb-1'>upgrade</h1>
