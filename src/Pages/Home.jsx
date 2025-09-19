@@ -27,7 +27,7 @@ function Home() {
         </div>
         <div className="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-center">
           <div className="">
-            <Link to="/mindgym">
+            <Link to="/">
             <img
               className="rounded-t-lg h-80 w-200"
               src="https://www.harbingergroup.com/wp-content/uploads/2023/08/MicrosoftTeams-image-21.jpg.webp"
@@ -78,7 +78,7 @@ function Home() {
           <Link to="/games">
             <img
               className="rounded-t-lg w-full h-50 object-cover mb-2"
-              src=''
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUI6HGFjeKUgKChpC4nb_ASD5XMRjRnhwahA&s"
               alt="img"
             />
           </Link>
