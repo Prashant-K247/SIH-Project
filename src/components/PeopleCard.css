@@ -1,0 +1,46 @@
+.person-card {
+  cursor: pointer;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition-property: box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.person-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.person-info h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.person-info p {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.person-info span {
+  font-size: 0.75rem;
+  color: #3b82f6;
+}
+
+.add-button {
+  padding: 0.25rem 0.75rem;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #2563eb;
+}

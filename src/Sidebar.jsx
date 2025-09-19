@@ -70,6 +70,32 @@ export default function Sidebar() {
           >
             Community
           </NavLink>
+
+          <NavLink
+            to="/people"
+            className={({ isActive }) =>
+              `rounded-lg p-2 transition font-semibold ${
+                isActive
+                  ? "bg-gray-700 text-blue-400"
+                  : "text-blue-300 hover:bg-gray-700"
+              }`
+            }
+          >
+            Councelors
+          </NavLink>
+
+          <NavLink
+            to="/contacts"
+            className={({ isActive }) =>
+              `rounded-lg p-2 transition font-semibold ${
+                isActive
+                  ? "bg-gray-700 text-blue-400"
+                  : "text-blue-300 hover:bg-gray-700"
+              }`
+            }
+          >
+            Contacts
+          </NavLink>
         </nav>
       </aside>
 
