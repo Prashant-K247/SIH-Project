@@ -39,8 +39,7 @@ function App() {
           <Route path="/upgrade" element={<Upgrade />} />
           <Route path="/page" element={<Page />} />     
         </Route>
-      </Routes>
-      
+      </Routes>  
     </Router>
   )
 }
