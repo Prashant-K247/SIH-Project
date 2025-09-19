@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-
+import mokshpng from './assets/mokshpng.png'
 export default function Sidebar() {
   return (
     <div className="flex w-screen h-screen bg-gray-900 overflow-hidden">
@@ -7,11 +7,11 @@ export default function Sidebar() {
         {/* Logo Section */}
         <div className="flex items-center justify-center h-20 border-b border-gray-700 p-4">
           <img
-            src="https://flowbite.com/docs/images/logo.svg" 
+            src={mokshpng}  
             alt="Logo" 
-            className="h-10 w-auto"
+            className="w-100 h-70"
           />
-          <h1 className="text-white text-3xl">Logo</h1>
+          
         </div>
 
         {/* Navigation */}

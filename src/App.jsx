@@ -11,6 +11,7 @@ import Meditation from './mindgym/Meditation'
 import Breathing from './mindgym/Breathing'
 import Nature from './mindgym/Nature'
 import Upgrade from './Pages/Upgrade'
+import Page from './Pages/Page'
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
           <Route path="/meditation" element={<Meditation />} />
           <Route path="/nature" element={<Nature />} />
           <Route path="/upgrade" element={<Upgrade />} />
+          <Route path="/page" element={<Page />} />
+          
         </Route>
       </Routes>
       
