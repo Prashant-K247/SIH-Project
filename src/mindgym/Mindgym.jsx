@@ -62,6 +62,7 @@ function mindgym() {
               Spend time in Nature
             </h5>
           </Link>
+<<<<<<< HEAD
           <p className="mb-3 font-normal text-gray-800 ">
             Take some fresh air and enjoy the beauty of nature.
           </p>
