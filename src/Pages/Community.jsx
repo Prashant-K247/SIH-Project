@@ -1,6 +1,12 @@
-import React from "react";
+import React,{useState} from "react";
 
 function Community() {
+  const [joined, setJoined] = useState(false);
+
+  const handleJoin = () => {
+    setJoined(!joined);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
       {/* Header */}
@@ -12,7 +18,11 @@ function Community() {
         <div>
           <h1 className="text-4xl font-bold mb-1">Anxietyhelp</h1>
           <div className="flex items-center gap-3">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-1 font-semibold">Join</button>
+            <button
+            onClick={handleJoin}
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-1 font-semibold">
+            {joined ? 'Joined' : 'Join'}
+            </button>
             <button className="border border-gray-600 text-white rounded px-4 py-1 font-semibold">Create Post</button>
           </div>
         </div>
