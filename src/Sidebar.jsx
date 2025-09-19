@@ -76,12 +76,12 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `rounded-lg p-2 transition font-semibold ${
                 isActive
-                  ? "bg-gray-700 text-blue-400"
-                  : "text-blue-300 hover:bg-gray-700"
+                  ? "bg-[#a687ff] text-gray-50"
+                  : "text-gray-50 hover:bg-[#a687ff]"
               }`
             }
           >
-            Councelors
+            Counselors
           </NavLink>
 
           <NavLink
@@ -89,8 +89,8 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `rounded-lg p-2 transition font-semibold ${
                 isActive
-                  ? "bg-gray-700 text-blue-400"
-                  : "text-blue-300 hover:bg-gray-700"
+                  ? "bg-[#a687ff] text-gray-50"
+                  : "text-gray-50 hover:bg-[#a687ff]"
               }`
             }
           >
