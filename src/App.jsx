@@ -22,6 +22,7 @@ import ContactsPage from "./pages/ContactsPage";
 function App() {
   return (
     <Router>
+<<<<<<< HEAD
       <Routes>
 
         {/* Public Routes: no sidebar */}
@@ -29,6 +30,19 @@ function App() {
         <Route path="/signup" element={<Signup />} />
 
         {/* Protected / Main App Routes: with sidebar */}
+=======
+      <div>
+        <header className="w-full h-20 px-4 py-5 bg-[#462994] flex items-center">
+          <Link to="/upgrade" className='ml-auto'>
+          <button className="flex items-center text-white font-bold text-xl ml-4 ml-auto bg-gray-600 rounded-lg px-2 py-1 transition  hover:bg-gray-500">
+          <h1 className='mb-1'>upgrade</h1>
+          </button>
+          </Link>
+          
+        </header>
+      </div>
+      <Routes >
+>>>>>>> 7b487551f3de7bccf30f733a4b2aa34114d6e727
         <Route element={<Sidebar />}>
           <Route path="/" element={<Home />} />
           <Route path="/games" element={<Games />} />

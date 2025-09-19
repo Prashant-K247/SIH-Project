@@ -4,7 +4,7 @@ function mindgym() {
   return (
     <div className='grid grid-cols-3 gap-x-5 gap-y-6'>
         {/* breathing card */}
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg ">
         <Link to="/breathing">
           <img
             className="rounded-t-lg w-128 h-64"
@@ -14,18 +14,18 @@ function mindgym() {
         </Link>
         <div className="p-5">
           <Link to="/breathing">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
               Breathing Exercise
             </h5>
           </Link>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-normal text-gray-800 ">
             Inhale peace, exhale tension.
           </p>
         </div>
         </div>
 
         {/* meditation card */}
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg ">
         <Link to="/meditation">
           <img
             className="rounded-t-lg w-128 h-64"
@@ -36,18 +36,18 @@ function mindgym() {
         </Link>
         <div className="p-5">
           <Link to="/meditation">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
               Meditation Exercise
             </h5>
           </Link>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-normal text-gray-800 ">
             Still mind, strong soul.
           </p>
         </div>
         </div>
 
         {/* Nature card */}
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg ">
         <Link to="/nature">
           <img
             className="rounded-t-lg w-128 h-64"
@@ -58,18 +58,19 @@ function mindgym() {
         </Link>
         <div className="p-5">
           <Link to="/nature">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
               Spend time in Nature
             </h5>
           </Link>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Touch some grass NIGGA.
+
+          <p className="mb-3 font-normal text-gray-800 ">
+            Take some fresh air and enjoy the beauty of nature.
           </p>
         </div>
         </div>
 
         {/* Connect with others */}
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg ">
         <Link to="/community">
           <img
             className="rounded-t-lg w-128 h-64"
@@ -80,11 +81,11 @@ function mindgym() {
         </Link>
         <div className="p-5">
           <Link to="/community">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
               Connect with Others
             </h5>
           </Link>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-normal text-gray-800 ">
             Join a community of like-minded individuals.
           </p>
         </div>
