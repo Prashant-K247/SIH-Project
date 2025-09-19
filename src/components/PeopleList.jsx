@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PersonCard from "./PeopleCard";
-import "./PeopleList.css"; // Import the CSS file
 
 export default function PeopleList() {
   const [people, setPeople] = useState([]);
@@ -43,8 +42,8 @@ export default function PeopleList() {
   if (loading) return <p>Loading people...</p>;
 
   return (
-    <div className="people-list-container">
-      <h2 className="people-list-title">Available People</h2>
+    <div className="flex flex-col space-y-4 p-6">
+      <h2 className="text-2xl font-bold mb-4">Available People</h2>
       {people.length === 0 ? (
         <p>No people found</p>
       ) : (

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
-import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     await authService.login({ email, password });
@@ -15,18 +15,22 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2 className="title">Welcome Back</h2>
-        <p className="subtitle">Login to continue</p>
+    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <h2 className="text-3xl font-extrabold text-center text-gray-800">
+          Welcome Back
+        </h2>
+        <p className="mt-2 text-center text-gray-500">Login to continue</p>
 
-        <form onSubmit={handleLogin} className="login-form">
+        <form onSubmit={handleLogin} className="mt-6 flex flex-col space-y-5">
           <div>
-            <label className="form-label">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
             <input
               type="email"
               placeholder="Enter your email"
-              className="form-input"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -34,25 +38,30 @@ function Login() {
           </div>
 
           <div>
-            <label className="form-label">Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Enter your password"
-              className="form-input"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
 
-          <button type="submit" className="login-button">
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold transition-colors hover:bg-blue-700"
+          >
             Login
           </button>
         </form>
 
-        <p className="signup-text">
-          Don’t have an account?{" "}
-          <Link to="/signup" className="signup-link">
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-600 font-medium hover:underline">
             Sign up
           </Link>
         </p>

@@ -2,18 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ContactCard from "./ContactCard";
-import "./ContactList.css"; // Import the CSS file
 
 export default function ContactList() {
   const [contacts, setContacts] = useState([]);
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
-
-  // Use optional chaining to safely get the user ID
-  const userId = user?.id; 
+  const userId = user?.id; // safe access
 
   useEffect(() => {
-    // Check if userId exists before making the API call
     if (!userId) {
       console.log("User not authenticated or ID not available.");
       return;
@@ -34,13 +29,11 @@ export default function ContactList() {
   }, [userId]);
 
   return (
-    <div className="contact-list-container">
-      <h2 className="contact-list-title">Your Contacts</h2>
-      {contacts.map((c) => {
-        console.log(c);
-        
-        return <ContactCard key={c._id} contact={c} />
-      })}
+    <div className="flex flex-col gap-4 p-6">
+      <h2 className="text-2xl font-bold mb-4">Your Contacts</h2>
+      {contacts.map((c) => (
+        <ContactCard key={c._id} contact={c} />
+      ))}
     </div>
   );
 }

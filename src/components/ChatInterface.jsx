@@ -5,54 +5,42 @@ import { Video } from "lucide-react";
 import commService from "../services/commService";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import "./ChatInterface.css"; // Import the CSS file
 
 export default function ChatInterface({ contact }) {
   const navigate = useNavigate();
+  const myId = useSelector((state) => state.auth.user.id); // from Redux
 
-  const myId = useSelector((state) => state.auth.user.id); // get from REDUX
-  
   const [room, setRoom] = useState(null);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
-  //-----------------------------------------------------Rendering the Chat Page on go-----------------------------------------------------------
-
   useEffect(() => {
     const initRoom = async () => {
       try {
-        //----------------------------------------connecting the 2 users in a room
         const { data } = await axios.post(
           `${import.meta.env.VITE_API_URL}/comms/chatroom`,
           { userA: myId, userB: contact._id },
-          {withCredentials: true}
+          { withCredentials: true }
         );
 
         const { roomId, appId, uid, token } = data;
-        setRoom(roomId); // { roomId, participants }
+        setRoom(roomId);
 
-        //---------------------------------------------------fetching old chats
         const history = await axios.post(
           `${import.meta.env.VITE_API_URL}/messages`,
           { userA: myId, userB: contact._id }
         );
 
         const sortedMessages = history.data.messages.map((msg) => ({
-          id: msg._id, // use MongoDB’s unique ID
+          id: msg._id,
           senderId: msg.sender,
           text: msg.text,
           timestamp: new Date(msg.createdAt).getTime(),
         }));
 
-        console.log(sortedMessages);
-        
-
         setMessages(sortedMessages);
 
-        //-----------------------------------------------------logging in and adding listeners
-
-        
-        await commService.loginRTM({appId, uid, token});
+        await commService.loginRTM({ appId, uid, token });
         await commService.joinRTMChannel(roomId);
 
         commService.onMessage((msg) => {
@@ -71,18 +59,11 @@ export default function ChatInterface({ contact }) {
     };
   }, [myId, contact]);
 
-  // ---------------------------------------------------------Video Call handler--------------------------------------------------------------
-
   const handleVideoCall = () => {
-    // TODO: Navigate to the video call page for this contact
     navigate("/video-call", { state: { contact } });
-    console.log("Video call clicked for", contact.name);
   };
 
-  // ------------------------------------------------------------Chat Handler-------------------------------------------------------------
-
   const handleSendMessage = () => {
-    // TODO: Send message via RTM and/or persist to DB
     if (!input.trim()) return;
     commService.sendMessage(input);
     axios.post(`${import.meta.env.VITE_API_URL}/messages/save`, {
@@ -91,34 +72,37 @@ export default function ChatInterface({ contact }) {
       text: input,
     });
 
-    setMessages((prev) => [...prev, { senderId: myId, text: input }]); // optional: show instantly
+    setMessages((prev) => [...prev, { senderId: myId, text: input }]);
     setInput("");
   };
 
-  //------------------------------------------------------------ChatBox Logic---------------------------------------------------------------
-
   const handleInputChange = (e) => setInput(e.target.value);
 
-  //------------------------------------------------------------page structure------------------------------------------------------------------
-
   return (
-    <div className="chat-interface-container">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-inter">
       {/* Top bar */}
-      <div className="chat-header">
-        <h3>{contact.name}</h3>
-        <Video className="video-icon" onClick={handleVideoCall} />
+      <div className="flex justify-between items-center px-5 py-4 bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
+        <h3 className="text-xl font-semibold text-gray-900 tracking-tight">
+          {contact.name}
+        </h3>
+        <Video
+          className="w-7 h-7 text-gray-600 cursor-pointer transition-transform duration-200 hover:text-blue-600 hover:scale-110"
+          onClick={handleVideoCall}
+        />
       </div>
 
-      {/* Middle message area */}
-      <div className="chat-messages">
+      {/* Messages */}
+      <div className="flex-1 flex flex-col gap-2 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         {messages.map((msg) => {
-          console.log(msg);
-          
           const isSent = msg.senderId === myId;
           return (
             <div
               key={msg.id || msg.timestamp}
-              className={`message ${isSent ? "sent" : "received"}`}
+              className={`max-w-[75%] px-3 py-2 rounded-xl text-sm leading-relaxed animate-fadeIn ${
+                isSent
+                  ? "self-end bg-blue-500 text-white rounded-br-md"
+                  : "self-start bg-gray-200 text-gray-900 rounded-bl-md"
+              }`}
             >
               {msg.text}
             </div>
@@ -126,16 +110,22 @@ export default function ChatInterface({ contact }) {
         })}
       </div>
 
-      {/* Bottom input area */}
-      <div className="chat-input-container">
+      {/* Input */}
+      <div className="flex items-center gap-2 px-4 py-3 bg-white border-t border-gray-200">
         <input
           type="text"
           placeholder="Type a message..."
           value={input}
           onChange={handleInputChange}
           onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+          className="flex-grow px-4 py-2.5 rounded-full border border-gray-300 outline-none text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
         />
-        <button onClick={handleSendMessage}>Send</button>
+        <button
+          onClick={handleSendMessage}
+          className="px-5 py-2.5 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transform hover:scale-105 transition"
+        >
+          Send
+        </button>
       </div>
     </div>
   );
